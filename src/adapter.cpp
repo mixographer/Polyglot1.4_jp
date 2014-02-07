@@ -114,6 +114,7 @@ static void stop_search       ();
 // static void quit              ();
 
 static void send_board        (int extra_move);
+static void export_board      ();
 static void send_pv           ();
 
 static void xboard_get        (xboard_t * xboard, char string[], int size);
@@ -539,6 +540,10 @@ static void xboard_step() {
 
       XB->depth_limit = true;
       XB->depth_max = atoi(Star[0]);
+
+   } else if (match(string,"fen")) {
+      
+      export_board();
 
    } else if (match(string,"setboard *")) {
 
@@ -1296,6 +1301,19 @@ static void send_board(int extra_move) {
 
    engine_send(Engine,""); // newline
 }
+
+// export_board()
+
+static void export_board(){
+    char fen[256];
+    board_t board[1];
+    char string[256];
+    
+    game_get_board(Game,Uci->board);
+    board_to_fen(Uci->board,fen,256);
+    xboard_send(Xboard,fen);
+}
+
 
 // send_pv()
 
