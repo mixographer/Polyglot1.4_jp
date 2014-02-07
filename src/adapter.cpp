@@ -1311,7 +1311,7 @@ static void export_board(){
     
     game_get_board(Game,Uci->board);
     board_to_fen(Uci->board,fen,256);
-    xboard_send(Xboard,fen);
+    xboard_send(XBoard,fen);
 }
 
 
